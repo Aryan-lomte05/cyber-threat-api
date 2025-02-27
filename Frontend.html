@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Threat Classifier</title>
+</head>
+<body>
+    <h2>Cyber Threat Classifier</h2>
+    <textarea id="threatDescription" rows="4" cols="50" placeholder="Enter threat description..."></textarea><br>
+    <button onclick="classifyThreat()">Classify</button>
+    <p id="result"></p>
+
+    <script>
+        function classifyThreat() {
+            let description = document.getElementById("threatDescription").value;
+            fetch("http://127.0.0.1:5000/classify", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({description: description})
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById("result").innerText = "Threat Type: " + data["Threat Classification"])
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
